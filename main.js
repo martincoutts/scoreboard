@@ -1,6 +1,8 @@
 const countrySelect = document.querySelector('#countrySelect');
+const competitionSelect = document.querySelector('#competitionSelect');
+let countryID;
 let countries = [];
-let competions = [];
+let competitions = [];
 let selectedCountry;
 
 // Document ready
@@ -16,7 +18,7 @@ $(document).ready(function () {
         type: 'GET',
     }).done(function (response) {
         // do something with the response, e.g. isolate the id of a linked resource   
-        console.log(response);
+        // console.log(response);
         response.areas.forEach(element => {
             let x = element.name;
             let id = element.id;
@@ -29,7 +31,8 @@ $(document).ready(function () {
 
     // On select change
     $('#countrySelect').change(function(){
-        selectedCountry = $('#countrySelect').val();
+        selectedCountry = $("#countrySelect option:selected").text();
+        countryID = $('#countrySelect').val();
 
         $.ajax({
             headers: {
@@ -40,10 +43,11 @@ $(document).ready(function () {
             type: 'GET',
         }).done(function (response) {
             // do something with the response, e.g. isolate the id of a linked resource   
-            console.log(response);
-            response.competions.forEach(element => {
-                
+            competitions = response.competitions;
+            competitions.forEach(element => {
+                // console.log(element.area.id);
             });
+            
     });
 });
 });
