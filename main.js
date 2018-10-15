@@ -4,6 +4,7 @@ let countryID;
 let countries = [];
 let competitions = [];
 let selectedCountry;
+let selectedCompetition;
 
 // Document ready
 $(document).ready(function () {
@@ -16,7 +17,7 @@ $(document).ready(function () {
         url: 'http://api.football-data.org/v2/areas',
         dataType: 'json',
         type: 'GET',
-    }).done(function (response) {   
+    }).done(function (response) {
         // console.log(response);
         response.areas.forEach(element => {
             let x = element.name;
@@ -45,22 +46,26 @@ $(document).ready(function () {
             option.innerText = x;
             option.setAttribute('value', id);
             // option.className = "display_none";
-            competitionSelect.appendChild(option); 
+            competitionSelect.appendChild(option);
         });
-        
-});
 
-    // On select change
-    $('#countrySelect').change(function(){
+    });
+
+    // On country select change
+    $('#countrySelect').change(function () {
         selectedCountry = $("#countrySelect option:selected").text();
         countryID = $('#countrySelect').val();
 
-        $('#competitionSelect > option').each(function(){
+        $('#competitionSelect > option').each(function () {
             this.classList.remove("display_none");
-            if(this.value !== countryID){
+            if (this.value !== countryID) {
                 this.classList.add("display_none");
             }
         });
+
+    });
+
+    $('#competitionSelect').change(function(){
         
-});
+    });
 });
