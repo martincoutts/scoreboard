@@ -16,8 +16,7 @@ $(document).ready(function () {
         url: 'http://api.football-data.org/v2/areas',
         dataType: 'json',
         type: 'GET',
-    }).done(function (response) {
-        // do something with the response, e.g. isolate the id of a linked resource   
+    }).done(function (response) {   
         // console.log(response);
         response.areas.forEach(element => {
             let x = element.name;
@@ -29,25 +28,39 @@ $(document).ready(function () {
         });
     });
 
+    // Competition selection
+    $.ajax({
+        headers: {
+            'X-Auth-Token': 'd565497f7275426097c945923bac37d9'
+        },
+        url: 'http://api.football-data.org/v2/competitions',
+        dataType: 'json',
+        type: 'GET',
+    }).done(function (response) {
+        competitions = response.competitions;
+        competitions.forEach(element => {
+            let x = element.name;
+            let id = element.area.id;
+            let option = document.createElement('OPTION');
+            option.innerText = x;
+            option.setAttribute('value', id);
+            // option.className = "display_none";
+            competitionSelect.appendChild(option); 
+        });
+        
+});
+
     // On select change
     $('#countrySelect').change(function(){
         selectedCountry = $("#countrySelect option:selected").text();
         countryID = $('#countrySelect').val();
 
-        $.ajax({
-            headers: {
-                'X-Auth-Token': 'd565497f7275426097c945923bac37d9'
-            },
-            url: 'http://api.football-data.org/v2/competitions',
-            dataType: 'json',
-            type: 'GET',
-        }).done(function (response) {
-            // do something with the response, e.g. isolate the id of a linked resource   
-            competitions = response.competitions;
-            competitions.forEach(element => {
-                // console.log(element.area.id);
-            });
-            
-    });
+        $('#competitionSelect > option').each(function(){
+            this.classList.remove("display_none");
+            if(this.value !== countryID){
+                this.classList.add("display_none");
+            }
+        });
+        
 });
 });
