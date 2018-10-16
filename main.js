@@ -42,9 +42,11 @@ $(document).ready(function () {
         competitions.forEach(element => {
             let x = element.name;
             let id = element.area.id;
+            let competition = element.id;
             let option = document.createElement('OPTION');
             option.innerText = x;
             option.setAttribute('value', id);
+            option.setAttribute('competitionID', competition);
             // option.className = "display_none";
             competitionSelect.appendChild(option);
         });
@@ -65,7 +67,9 @@ $(document).ready(function () {
 
     });
 
-    $('#competitionSelect').change(function(){
-        
+    // Competition select change
+    $('#competitionSelect').change(function () {
+        selectedCompetition = $('option:selected', this).attr('competitionID');
+
     });
 });
