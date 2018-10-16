@@ -3,13 +3,15 @@ const competitionSelect = document.querySelector('#competitionSelect');
 let countryID;
 let countries = [];
 let competitions = [];
+let standings = [];
 let selectedCountry;
 let selectedCompetition;
+const table = document.querySelector('#scoreboardTable');
 
 // Document ready
 $(document).ready(function () {
 
-    // country selection
+    // country select population
     $.ajax({
         headers: {
             'X-Auth-Token': 'd565497f7275426097c945923bac37d9'
@@ -29,7 +31,7 @@ $(document).ready(function () {
         });
     });
 
-    // Competition selection
+    // Competition select population
     $.ajax({
         headers: {
             'X-Auth-Token': 'd565497f7275426097c945923bac37d9'
@@ -70,6 +72,33 @@ $(document).ready(function () {
     // Competition select change
     $('#competitionSelect').change(function () {
         selectedCompetition = $('option:selected', this).attr('competitionID');
+        table.innerHTML = '';
 
+        // standings GET request
+        $.ajax({
+            headers: {
+                'X-Auth-Token': 'd565497f7275426097c945923bac37d9'
+            },
+            url: `http://api.football-data.org/v2/competitions/${selectedCompetition}/standings`,
+            dataType: 'json',
+            type: 'GET',
+        }).done(function (response) {
+            standings = response.standings[0].table;
+
+            // Creating table
+        standings.forEach(element => {
+            let tr = document.createElement('TR');
+            table.append(tr);
+            let td1 = document.createElement('TD');
+            let td2 = document.createElement('TD');
+            let position = document.createTextNode(element.position);
+            let teamName = document.createTextNode(element.team.name);
+            td1.appendChild(position);
+            td2.appendChild(teamName);
+            // td.textContent(element.team.name);
+            tr.append(td1);
+            tr.append(td2);
+        });
+        });
     });
 });
