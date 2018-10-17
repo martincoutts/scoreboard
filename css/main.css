@@ -2,4 +2,17 @@
   display: none;
 }
 
+#scoreboardTable {
+  width: 100%;
+  background-color: rgba(240, 238, 236, 0.5);
+  text-align: center;
+}
+#scoreboardTable .teamName {
+  text-align: left;
+}
+#scoreboardTable img {
+  height: 50px;
+  width: 50px;
+}
+
 /*# sourceMappingURL=main.css.map */
