@@ -139,7 +139,8 @@ $(document).ready(function () {
             td1.appendChild(position);
             td2.appendChild(crestImg);
             td2.appendChild(teamName);
-            td2.className = 'teamName';
+            td2.classList.add('teamName');
+            td2.classList.add('ml-lg-5');
             td3.appendChild(gamesPlayed);
             td4.appendChild(won);
             td5.appendChild(drawn);
