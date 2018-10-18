@@ -1,2 +1,6 @@
-@import "selects";
-@import "table";
+@import "utilities/variables";
+
+@import "partials/typography";
+@import "partials/header";
+@import "partials/selects";
+@import "partials/table";

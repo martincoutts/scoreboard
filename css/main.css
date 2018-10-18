@@ -1,3 +1,11 @@
+body {
+  font-family: "Niramit", sans-serif;
+}
+
+h1 {
+  font-family: "Roboto Condensed", sans-serif;
+}
+
 .display_none {
   display: none;
 }

@@ -93,7 +93,9 @@ $(document).ready(function () {
 
     // Competition select change
     $('#competitionSelect').change(function () {
-        selectedCompetition = $('option:selected', this).attr('competitionID');
+        // selectedCompetition = $('option:selected', this).attr('competitionID');
+
+        selectedCompetition = 2021;
         
         table.innerHTML = '';
         addTableHeaders();
