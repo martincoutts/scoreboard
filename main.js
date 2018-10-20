@@ -106,10 +106,6 @@ $(document).ready(function () {
         // selectedCompetition = 2021;
 
         table.innerHTML = '';
-        addTableHeaders();
-        let tbody = document.createElement('TBODY');
-        table.append(tbody);
-
 
         // standings GET request
         $.ajax({
@@ -128,8 +124,14 @@ $(document).ready(function () {
         }).done(function (response) {
             standings = response.standings[0].table;
 
-            if (statusCode === 200) {
+            if(statusCode === 403){
+
+            }else if (statusCode === 200) {
                 // Creating table
+                addTableHeaders();
+                let tbody = document.createElement('TBODY');
+                table.append(tbody);
+
                 standings.forEach(element => {
                     let tr = document.createElement('TR');
                     tbody.append(tr);
@@ -174,8 +176,6 @@ $(document).ready(function () {
                     tr.append(td7);
                     tr.append(td8);
                 });
-                console.log("success");
-            }else if(statusCode === 403){
                 console.log(statusCode);
             }
         });
