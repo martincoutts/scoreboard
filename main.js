@@ -6,6 +6,7 @@ let competitions = [];
 let standings = [];
 let selectedCountry;
 let selectedCompetition;
+let statusCode;
 const table = document.querySelector('#scoreboardTable');
 const tableHeaders = [
     'Position',
@@ -18,16 +19,22 @@ const tableHeaders = [
     'Goal Difference'
 ]
 
-function addTableHeaders(){
+function addTableHeaders() {
+    let thead = document.createElement('THEAD');
     let tr = document.createElement('TR');
-    table.append(tr);
+    table.append(thead);
+    thead.append(tr);
     tableHeaders.forEach(element => {
         let th = document.createElement('TH');
+        th.setAttribute('scope', 'col');
         let text = document.createTextNode(element);
         th.append(text);
         tr.append(th);
     });
+}
 
+function addClasses(element) {
+    element.classList.add('d-none', 'd-lg-block', 'd-xl-none');
 }
 
 // Document ready
@@ -93,13 +100,16 @@ $(document).ready(function () {
 
     // Competition select change
     $('#competitionSelect').change(function () {
-        // selectedCompetition = $('option:selected', this).attr('competitionID');
+        selectedCompetition = $('option:selected', this).attr('competitionID');
 
-        selectedCompetition = 2021;
-        
+        // MUST BE CHANGED BEFORE DEPLOYMENT!!!!!!!
+        // selectedCompetition = 2021;
+
         table.innerHTML = '';
         addTableHeaders();
-        
+        let tbody = document.createElement('TBODY');
+        table.append(tbody);
+
 
         // standings GET request
         $.ajax({
@@ -109,54 +119,66 @@ $(document).ready(function () {
             url: `http://api.football-data.org/v2/competitions/${selectedCompetition}/standings`,
             dataType: 'json',
             type: 'GET',
+            success: function (response, textStatus, jqXHR) {
+                statusCode = jqXHR.status;
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                statusCode = jqXHR.status;
+            }
         }).done(function (response) {
             standings = response.standings[0].table;
 
-            // Creating table
-        standings.forEach(element => {
-            let tr = document.createElement('TR');
-            table.append(tr);
-            let td1 = document.createElement('TD');
-            let td2 = document.createElement('TD');
-            let crestImg = document.createElement('IMG');
-            let td3 = document.createElement('TD');
-            let td4 = document.createElement('TD');
-            let td5 = document.createElement('TD');
-            let td6 = document.createElement('TD');
-            let td7 = document.createElement('TD');
-            let td8 = document.createElement('TD');
-            
-            let position = document.createTextNode(element.position);
-            // let crestURL = document.createTextNode(element.team.crestUrl);
-            crestImg.setAttribute('src', element.team.crestUrl);
-            let teamName = document.createTextNode(element.team.name);
-            let gamesPlayed = document.createTextNode(element.playedGames);
-            let won = document.createTextNode(element.won);
-            let drawn = document.createTextNode(element.draw);
-            let lost = document.createTextNode(element.lost);
-            let points = document.createTextNode(element.points);
-            let goalDifference = document.createTextNode(element.goalDifference);
-            td1.appendChild(position);
-            td2.appendChild(crestImg);
-            td2.appendChild(teamName);
-            td2.classList.add('teamName');
-            td2.classList.add('ml-lg-5');
-            td3.appendChild(gamesPlayed);
-            td4.appendChild(won);
-            td5.appendChild(drawn);
-            td6.appendChild(lost);
-            td7.appendChild(points);
-            td8.appendChild(goalDifference);
-            // td.textContent(element.team.name);
-            tr.append(td1);
-            tr.append(td2);
-            tr.append(td3);
-            tr.append(td4);
-            tr.append(td5);
-            tr.append(td6);
-            tr.append(td7);
-            tr.append(td8);
+            if (statusCode === 200) {
+                // Creating table
+                standings.forEach(element => {
+                    let tr = document.createElement('TR');
+                    tbody.append(tr);
+                    let th = document.createElement('TH');
+                    th.setAttribute('scope', 'row');
+                    let td2 = document.createElement('TD');
+                    let crestImg = document.createElement('IMG');
+                    let td3 = document.createElement('TD');
+                    let td4 = document.createElement('TD');
+                    let td5 = document.createElement('TD');
+                    let td6 = document.createElement('TD');
+                    let td7 = document.createElement('TD');
+                    let td8 = document.createElement('TD');
+
+                    let position = document.createTextNode(element.position);
+                    // let crestURL = document.createTextNode(element.team.crestUrl);
+                    crestImg.setAttribute('src', element.team.crestUrl);
+                    let teamName = document.createTextNode(element.team.name);
+                    let gamesPlayed = document.createTextNode(element.playedGames);
+                    let won = document.createTextNode(element.won);
+                    let drawn = document.createTextNode(element.draw);
+                    let lost = document.createTextNode(element.lost);
+                    let points = document.createTextNode(element.points);
+                    let goalDifference = document.createTextNode(element.goalDifference);
+                    th.appendChild(position);
+                    td2.appendChild(crestImg);
+                    td2.appendChild(teamName);
+                    td2.classList.add('teamName');
+                    td2.classList.add('ml-lg-5');
+                    td3.appendChild(gamesPlayed);
+                    td4.appendChild(won);
+                    td5.appendChild(drawn);
+                    td6.appendChild(lost);
+                    td7.appendChild(points);
+                    td8.appendChild(goalDifference);
+                    tr.append(th);
+                    tr.append(td2);
+                    tr.append(td3);
+                    tr.append(td4);
+                    tr.append(td5);
+                    tr.append(td6);
+                    tr.append(td7);
+                    tr.append(td8);
+                });
+                console.log("success");
+            }else if(statusCode === 403){
+                console.log(statusCode);
+            }
         });
-        });
+
     });
 });

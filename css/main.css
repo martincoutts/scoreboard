@@ -1,3 +1,8 @@
+#scoreboardTable td, #scoreboardTable th {
+  margin: 20px;
+  padding: 20px;
+}
+
 body {
   font-family: "Niramit", sans-serif;
 }
@@ -18,7 +23,7 @@ nav {
   width: 100%;
   background-color: rgba(234, 240, 237, 0.3);
   text-align: center;
-  margin-bottom: 30px;
+  margin: 20px 0 30px 0;
 }
 #scoreboardTable .teamName {
   text-align: left;
