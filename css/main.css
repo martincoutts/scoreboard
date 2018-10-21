@@ -41,4 +41,14 @@ nav {
   margin-right: 15px;
 }
 
+.errorMessage {
+  background-color: rgba(234, 240, 237, 0.3);
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+.errorMessage h3 {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
 /*# sourceMappingURL=main.css.map */
