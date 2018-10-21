@@ -80,13 +80,12 @@ $(document).ready(function () {
         error: function (jqXHR, textStatus, errorThrown) {
             statusCode = jqXHR.status;
             document.getElementById('scoreboardDiv').innerHTML = '';
-            if (statusCode === 403 || statusCode === 404) {
-                displayError(statusCode, "No information on this competition");
-            } else if (statusCode === 429 || statusCode === 0) {
+            // if (statusCode === 403 || statusCode === 404) {
+            //     displayError(statusCode, "No information on this competition");
+            if (statusCode === 429 || statusCode === 0) {
                 displayError("Error", "Number of requests exceeded, please wait for a minute and try again");
             }
         }
-
     }).done(function (response) {
         competitions = response.competitions;
         competitions.forEach(element => {
@@ -134,6 +133,9 @@ $(document).ready(function () {
             url: `http://api.football-data.org/v2/competitions/${selectedCompetition}/standings`,
             dataType: 'json',
             type: 'GET',
+            success: function(data, textStatus, jqXHR   ){
+                statusCode = jqXHR.status;
+            },
             error: function (jqXHR, textStatus, errorThrown) {
                 statusCode = jqXHR.status;
                 document.getElementById('scoreboardDiv').innerHTML = '';
@@ -145,6 +147,7 @@ $(document).ready(function () {
 
             }
         }).done(function (response) {
+            if(statusCode === 200){
             standings = response.standings[0].table;
             // Creating table
             addTableHeaders();
@@ -195,6 +198,7 @@ $(document).ready(function () {
                 tr.append(td7);
                 tr.append(td8);
             });
+        }
         });
 
 
