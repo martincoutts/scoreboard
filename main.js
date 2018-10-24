@@ -37,13 +37,14 @@ function addClasses(element) {
     element.classList.add('d-none', 'd-lg-block', 'd-xl-none');
 }
 
-function displayError(statusCode, message) {
+function displayError(element, statusCode, message) {
+    let container = document.getElementById(element);
+    container.innerHTML = '';
     let div = document.createElement('DIV');
-    let h3 = document.createElement('H3');
-    let scoreboardDiv = document.getElementById('scoreboardDiv');
+    // let h3 = document.createElement('H3');
     div.innerHTML = `<h3>${statusCode}: ${message}</h3>`;
     div.classList.add('container-fluid', 'errorMessage', 'text-center');
-    scoreboardDiv.append(div);
+    container.append(div);
 }
 
 // Document ready
@@ -76,16 +77,7 @@ $(document).ready(function () {
         },
         url: 'http://api.football-data.org/v2/competitions',
         dataType: 'json',
-        type: 'GET',
-        error: function (jqXHR, textStatus, errorThrown) {
-            statusCode = jqXHR.status;
-            document.getElementById('scoreboardDiv').innerHTML = '';
-            // if (statusCode === 403 || statusCode === 404) {
-            //     displayError(statusCode, "No information on this competition");
-            if (statusCode === 429 || statusCode === 0) {
-                displayError("Error", "Number of requests exceeded, please wait for a minute and try again");
-            }
-        }
+        type: 'GET'
     }).done(function (response) {
         competitions = response.competitions;
         competitions.forEach(element => {
@@ -132,22 +124,20 @@ $(document).ready(function () {
             },
             url: `http://api.football-data.org/v2/competitions/${selectedCompetition}/standings`,
             dataType: 'json',
-            type: 'GET',
-            success: function(data, textStatus, jqXHR   ){
-                statusCode = jqXHR.status;
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                statusCode = jqXHR.status;
-                document.getElementById('scoreboardDiv').innerHTML = '';
-                if (statusCode === 403 || statusCode === 404) {
-                    displayError(statusCode, "No information on this competition");
-                } else if (statusCode === 429 || statusCode === 0) {
-                    displayError("Error", "Number of requests exceeded, please wait for a minute and try again");
-                }
+            type: 'GET'
+            // success: function(data, textStatus, jqXHR){
+            //     statusCode = jqXHR.status;
+            // },
+            // error: function (jqXHR, textStatus, errorThrown) {
+            //     statusCode = jqXHR.status;
+            //     if (statusCode === 403 || statusCode === 404) {
+            //         displayError('scoreboardDiv', statusCode, "No information on this competition");
+            //     } else if (statusCode === 429 || statusCode === 0) {
+            //         displayError('scoreboardDiv', "Error", "Number of requests exceeded, please wait for a minute and try again");
+            //     }
 
-            }
+            // }
         }).done(function (response) {
-            if(statusCode === 200){
             standings = response.standings[0].table;
             // Creating table
             addTableHeaders();
@@ -198,7 +188,18 @@ $(document).ready(function () {
                 tr.append(td7);
                 tr.append(td8);
             });
-        }
+        });
+
+        $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
+            console.error(jqXHR.status);
+            let statusErr = jqXHR.status;
+
+            displayError('scoreboardDiv', statusErr, 'Error');
+            // if (statusCode === 403 || statusCode === 404) {
+            //     displayError('scoreboardDiv', statusCode, "No information on this competition");
+            // } else if (statusCode === 429 || statusCode === 0) {
+            //     displayError('scoreboardDiv', "Error", "Number of requests exceeded, please wait for a minute and try again");
+            // }
         });
 
 
