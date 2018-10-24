@@ -50,6 +50,8 @@ function displayError(element, statusCode, message) {
 // Document ready
 $(document).ready(function () {
 
+    $('#errorDiv').hide();
+    
     // country select population
     $.ajax({
         headers: {
@@ -124,10 +126,10 @@ $(document).ready(function () {
             },
             url: `http://api.football-data.org/v2/competitions/${selectedCompetition}/standings`,
             dataType: 'json',
-            type: 'GET'
-            // success: function(data, textStatus, jqXHR){
-            //     statusCode = jqXHR.status;
-            // },
+            type: 'GET',
+            success: function(data, textStatus, jqXHR){
+                $('#errorDiv').hide();
+            }
             // error: function (jqXHR, textStatus, errorThrown) {
             //     statusCode = jqXHR.status;
             //     if (statusCode === 403 || statusCode === 404) {
@@ -191,15 +193,16 @@ $(document).ready(function () {
         });
 
         $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
-            console.error(jqXHR.status);
-            let statusErr = jqXHR.status;
+            statusCode = jqXHR.status;
 
-            displayError('scoreboardDiv', statusErr, 'Error');
-            // if (statusCode === 403 || statusCode === 404) {
-            //     displayError('scoreboardDiv', statusCode, "No information on this competition");
-            // } else if (statusCode === 429 || statusCode === 0) {
-            //     displayError('scoreboardDiv', "Error", "Number of requests exceeded, please wait for a minute and try again");
-            // }
+            $('#errorDiv').show();
+            // displayError('errorDiv', jqXHR.status, "Error mate");
+            // displayError('errorDiv', statusErr, 'Error');
+            if (statusCode === 403 || statusCode === 404) {
+                displayError('errorDiv', statusCode, "No information on this competition");
+            } else if (statusCode === 429 || statusCode === 0) {
+                displayError('errorDiv', "Error", "Number of requests exceeded, please wait for a minute and try again");
+            }
         });
 
 
