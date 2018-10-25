@@ -15,8 +15,8 @@ const tableHeaders = [
     'Won',
     'Draw',
     'Lost',
-    'Points',
-    'Goal Difference'
+    'Goal Difference',
+    'Points'
 ]
 
 function addTableHeaders() {
@@ -31,6 +31,14 @@ function addTableHeaders() {
         th.append(text);
         tr.append(th);
     });
+    // Adding classes to certain headers
+    let thList = Array.from(document.querySelectorAll('th'));
+    let thListSlice = thList.slice(2, 7);
+    thListSlice.forEach(th => {
+        th.classList.add('d-none', 'd-lg-table-cell');
+    });
+
+    
 }
 
 function addClasses(element) {
@@ -41,7 +49,6 @@ function displayError(element, statusCode, message) {
     let container = document.getElementById(element);
     container.innerHTML = '';
     let div = document.createElement('DIV');
-    // let h3 = document.createElement('H3');
     div.innerHTML = `<h3>${statusCode}: ${message}</h3>`;
     div.classList.add('container-fluid', 'errorMessage', 'text-center');
     container.append(div);
@@ -51,7 +58,7 @@ function displayError(element, statusCode, message) {
 $(document).ready(function () {
 
     $('#errorDiv').hide();
-    
+
     // country select population
     $.ajax({
         headers: {
@@ -127,18 +134,9 @@ $(document).ready(function () {
             url: `http://api.football-data.org/v2/competitions/${selectedCompetition}/standings`,
             dataType: 'json',
             type: 'GET',
-            success: function(data, textStatus, jqXHR){
+            success: function (data, textStatus, jqXHR) {
                 $('#errorDiv').hide();
             }
-            // error: function (jqXHR, textStatus, errorThrown) {
-            //     statusCode = jqXHR.status;
-            //     if (statusCode === 403 || statusCode === 404) {
-            //         displayError('scoreboardDiv', statusCode, "No information on this competition");
-            //     } else if (statusCode === 429 || statusCode === 0) {
-            //         displayError('scoreboardDiv', "Error", "Number of requests exceeded, please wait for a minute and try again");
-            //     }
-
-            // }
         }).done(function (response) {
             standings = response.standings[0].table;
             // Creating table
@@ -173,14 +171,13 @@ $(document).ready(function () {
                 th.appendChild(position);
                 td2.appendChild(crestImg);
                 td2.appendChild(teamName);
-                td2.classList.add('teamName');
-                td2.classList.add('ml-lg-5');
+                td2.classList.add('teamName', 'ml-lg-5');
                 td3.appendChild(gamesPlayed);
                 td4.appendChild(won);
                 td5.appendChild(drawn);
                 td6.appendChild(lost);
-                td7.appendChild(points);
-                td8.appendChild(goalDifference);
+                td7.appendChild(goalDifference);
+                td8.appendChild(points);
                 tr.append(th);
                 tr.append(td2);
                 tr.append(td3);
@@ -189,6 +186,14 @@ $(document).ready(function () {
                 tr.append(td6);
                 tr.append(td7);
                 tr.append(td8);
+                
+                // Adding hidden display classes to specific elements on each row
+                const trChildren = Array.from(tr.childNodes);
+                // console.log(trChildren);
+                const trChildrenSlice = trChildren.slice(2, 7);
+                trChildrenSlice.forEach(cell => {
+                    cell.classList.add('d-none', 'd-lg-table-cell');
+                });
             });
         });
 
@@ -203,6 +208,11 @@ $(document).ready(function () {
             } else if (statusCode === 429 || statusCode === 0) {
                 displayError('errorDiv', "Error", "Number of requests exceeded, please wait for a minute and try again");
             }
+        });
+
+        $( window ).resize(function() {
+            if($(window).width() <=990) $('.teamName').addClass("tableMobile");
+            else $('.teamName').removeClass("tableMobile");
         });
 
 

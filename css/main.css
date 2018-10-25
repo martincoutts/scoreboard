@@ -1,8 +1,25 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 #scoreboardTable td, #scoreboardTable th {
   margin: 20px;
   padding: 20px;
 }
 
+@media only screen and (max-width: 450px) {
+  .teamName {
+    word-wrap: break-word;
+  }
+  .teamName img {
+    display: block;
+  }
+}
 body {
   font-family: "Niramit", sans-serif;
 }
@@ -39,16 +56,23 @@ nav {
   height: 50px;
   width: 50px;
   margin-right: 15px;
+  border-radius: 50%;
+}
+
+.tableMobile {
+  margin-right: 50px;
 }
 
 .errorMessage {
   background-color: rgba(234, 240, 237, 0.3);
+  height: 100%;
   margin-top: 50px;
   margin-bottom: 30px;
 }
 .errorMessage h3 {
-  padding-top: 100px;
+  padding-top: 250px;
   padding-bottom: 100px;
+  margin-bottom: 200px;
 }
 
 /*# sourceMappingURL=main.css.map */
