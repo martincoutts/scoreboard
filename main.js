@@ -6,6 +6,7 @@ let competitions = [];
 let standings = [];
 let selectedCountry;
 let selectedCompetition;
+let noOptions = [];
 let statusCode;
 const table = document.querySelector('#scoreboardTable');
 const tableHeaders = [
@@ -107,13 +108,32 @@ $(document).ready(function () {
     $('#countrySelect').change(function () {
         selectedCountry = $("#countrySelect option:selected").text();
         countryID = $('#countrySelect').val();
+        noOptions = [];
+        let arrayContains = '';
 
         $('#competitionSelect > option').each(function () {
-            this.classList.remove("display_none");
+            this.classList.remove("display_none", "display_this");
             if (this.value !== countryID) {
                 this.classList.add("display_none");
+            }else{
+                this.classList.add("display_this");
             }
         });
+
+        $('#competitionSelect > option').each(function(){
+            noOptions.push(this.classList.contains('display_this'));
+        });
+
+        arrayContains = (noOptions.indexOf(true) > -1);
+        if(arrayContains === false){
+            $('#competitionSelect').prop('disabled', 'disabled');
+            ($("#competitionSelect option:selected ").text('No Info For This Country'));
+            table.innerHTML = '';
+        }else{
+            $('#competitionSelect').prop('disabled', false);
+            ($("#competitionSelect option:selected ").text('Select A Competition'));
+        }
+        
 
     });
 
