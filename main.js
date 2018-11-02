@@ -120,10 +120,12 @@ $(document).ready(function () {
             }
         });
 
+        // Checking if select has any options available to user
         $('#competitionSelect > option').each(function(){
             noOptions.push(this.classList.contains('display_this'));
         });
 
+        // Alters select based on options displayed to user
         arrayContains = (noOptions.indexOf(true) > -1);
         if(arrayContains === false){
             $('#competitionSelect').prop('disabled', 'disabled');
