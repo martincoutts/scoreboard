@@ -1,10 +1,12 @@
 import React from "react";
 
-const CountrySelect = () => (
+const CountrySelect = props => (
   <select className="form-control" id="countrySelect">
-    <option selected value="" disabled>
-      Select A Country
-    </option>
+    {props.countries.map((country, index) => (
+      <option key={index + 1} data-countrycode={country.countryCode}>
+        {country.name}
+      </option>
+    ))}
   </select>
 );
 
