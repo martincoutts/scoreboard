@@ -10,7 +10,7 @@ class CountrySelect extends React.Component {
         onChange={e => this.props.handleCountrySelect(e.target.value)}
       >
         {this.props.countries.map((country, index) => (
-          <option key={index + 1} value={country.countryCode}>
+          <option key={index + 1} value={country.id}>
             {country.name}
           </option>
         ))}

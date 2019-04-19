@@ -13,7 +13,8 @@ class App extends Component {
     this.state = {
       countries: [],
       competitions: [],
-      selectedCountry: ""
+      selectedCountryId: "",
+      filteredCompetitions: []
     };
   }
 
@@ -73,8 +74,25 @@ class App extends Component {
   }
 
   handleCountrySelect = value => {
-    this.setState({ selectedCountry: value });
+    this.setState({ selectedCountryId: value }, () =>
+      this.filterCompetitions()
+    );
     console.log(value);
+  };
+
+  filterCompetitions = () => {
+    let selectedCountryId = parseInt(this.state.selectedCountryId);
+    let filteredCompetitions = this.state.competitions.filter(function(
+      competition
+    ) {
+      return competition.area.id === selectedCountryId;
+    });
+    this.setState({
+      filteredCompetitions
+    });
+
+    console.log(selectedCountryId);
+    console.log(filteredCompetitions);
   };
 
   render() {
@@ -84,6 +102,7 @@ class App extends Component {
         <CountrySelect
           countries={this.state.countries}
           handleCountrySelect={this.handleCountrySelect}
+          filterCompetitions={this.filterCompetitions}
         />
         <CompetitionSelect />
         <ErrorDiv />
