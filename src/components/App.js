@@ -8,10 +8,14 @@ import ScoreboardDiv from "./ScoreboardDiv";
 import Table from "./Table";
 
 class App extends Component {
-  state = {
-    countries: [],
-    competitions: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      countries: [],
+      competitions: [],
+      selectedCountry: ""
+    };
+  }
 
   componentDidMount() {
     this.fetchCountries();
@@ -68,11 +72,19 @@ class App extends Component {
       );
   }
 
+  handleCountrySelect = value => {
+    this.setState({ selectedCountry: value });
+    console.log(value);
+  };
+
   render() {
     return (
       <div className="App">
         <Header />
-        <CountrySelect countries={this.state.countries} />
+        <CountrySelect
+          countries={this.state.countries}
+          handleCountrySelect={this.handleCountrySelect}
+        />
         <CompetitionSelect />
         <ErrorDiv />
         <ScoreboardDiv />
