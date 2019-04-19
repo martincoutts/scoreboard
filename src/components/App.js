@@ -14,7 +14,8 @@ class App extends Component {
       countries: [],
       competitions: [],
       selectedCountryId: "",
-      filteredCompetitions: []
+      filteredCompetitions: [],
+      selectedCompetitionId: ""
     };
   }
 
@@ -80,6 +81,11 @@ class App extends Component {
     console.log(value);
   };
 
+  handleCompetitionSelect = value => {
+    this.setState({ selectedCompetitionId: value });
+    console.log(value);
+  };
+
   filterCompetitions = () => {
     let selectedCountryId = parseInt(this.state.selectedCountryId);
     let filteredCompetitions = this.state.competitions.filter(function(
@@ -104,7 +110,10 @@ class App extends Component {
           handleCountrySelect={this.handleCountrySelect}
           filterCompetitions={this.filterCompetitions}
         />
-        <CompetitionSelect />
+        <CompetitionSelect
+          filteredCompetitions={this.state.filteredCompetitions}
+          handleCompetitionSelect={this.handleCompetitionSelect}
+        />
         <ErrorDiv />
         <ScoreboardDiv />
         <Table />
