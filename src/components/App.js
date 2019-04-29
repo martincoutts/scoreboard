@@ -84,7 +84,7 @@ class App extends Component {
       .then(
         result => {
           this.setState({
-            standings: result
+            standings: result.standings[0].table
           });
         },
         // Note: it's important to handle errors here
