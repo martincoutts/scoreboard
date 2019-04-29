@@ -5,7 +5,6 @@ import CountrySelect from "./CountrySelect";
 import CompetitionSelect from "./CompetitionSelect";
 import ErrorDiv from "./ErrorDiv";
 import ScoreboardDiv from "./ScoreboardDiv";
-import Table from "./Table";
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +14,8 @@ class App extends Component {
       competitions: [],
       selectedCountryId: "",
       filteredCompetitions: [],
-      selectedCompetitionId: ""
+      selectedCompetitionId: "",
+      standings: []
     };
   }
 
@@ -74,16 +74,41 @@ class App extends Component {
       );
   }
 
+  fetchTable(compId) {
+    fetch(`http://api.football-data.org/v2/competitions/${compId}/standings`, {
+      headers: {
+        "X-Auth-Token": "d565497f7275426097c945923bac37d9"
+      }
+    })
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({
+            standings: result
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch block so that we don't swallow
+        // exceptions from actual bugs in components.
+        error => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      );
+  }
+
   handleCountrySelect = value => {
     this.setState({ selectedCountryId: value }, () =>
       this.filterCompetitions()
     );
-    console.log(value);
   };
 
   handleCompetitionSelect = value => {
-    this.setState({ selectedCompetitionId: value });
-    console.log(value);
+    this.setState({ selectedCompetitionId: parseInt(value) });
+    console.log(parseInt(value));
+    this.fetchTable(parseInt(value));
   };
 
   filterCompetitions = () => {
@@ -115,8 +140,7 @@ class App extends Component {
           handleCompetitionSelect={this.handleCompetitionSelect}
         />
         <ErrorDiv />
-        <ScoreboardDiv />
-        <Table />
+        <ScoreboardDiv standings={this.state.standings} />
       </div>
     );
   }
