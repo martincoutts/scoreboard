@@ -84,7 +84,7 @@ class App extends Component {
       .then(
         result => {
           this.setState({
-            standings: result.standings[0].table
+            standings: result
           });
         },
         // Note: it's important to handle errors here
@@ -106,8 +106,8 @@ class App extends Component {
   };
 
   handleCompetitionSelect = value => {
+    this.setState({ selectedCompetitionId: "" });
     this.setState({ selectedCompetitionId: parseInt(value) });
-    console.log(parseInt(value));
     this.fetchTable(parseInt(value));
   };
 
@@ -121,9 +121,6 @@ class App extends Component {
     this.setState({
       filteredCompetitions
     });
-
-    console.log(selectedCountryId);
-    console.log(filteredCompetitions);
   };
 
   render() {
@@ -139,8 +136,11 @@ class App extends Component {
           filteredCompetitions={this.state.filteredCompetitions}
           handleCompetitionSelect={this.handleCompetitionSelect}
         />
-        <ErrorDiv />
-        <ScoreboardDiv standings={this.state.standings} />
+        {this.state.standings.errorCode ? (
+          <ErrorDiv standings={this.state.standings} />
+        ) : (
+          <ScoreboardDiv standings={this.state.standings} />
+        )}
       </div>
     );
   }

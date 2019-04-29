@@ -3,8 +3,8 @@ import { Table } from "react-bootstrap";
 
 const ScoreboardTable = props => (
   <div className="table-responsive">
-    {props.standings.length === 0 ? (
-      <h3>Select A competition</h3>
+    {props.standings.length === 0 || props.standings.errorCode ? (
+      <h3>Select A Competition</h3>
     ) : (
       <Table id="scoreboardTable" responsive>
         <thead>
@@ -20,7 +20,7 @@ const ScoreboardTable = props => (
           </tr>
         </thead>
         <tbody>
-          {props.standings.map((team, index) => (
+          {props.standings.standings[0].table.map((team, index) => (
             <tr key={index + 1}>
               <td>{team.position}</td>
               <td>

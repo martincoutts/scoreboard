@@ -1,5 +1,9 @@
 import React from "react";
 
-const ErrorDiv = () => <div id="errorDiv" />;
+const ErrorDiv = props => (
+  <div id="errorDiv">
+    <h3>props.</h3>
+  </div>
+);
 
 export default ErrorDiv;
