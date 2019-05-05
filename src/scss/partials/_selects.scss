@@ -1,3 +1,11 @@
-.display_none{
-    display: none;
+.userSelect {
+    height: 30px;
+}
+
+#countrySelect {
+    grid-area: countrySelect;
+}
+
+#competitionSelect {
+    grid-area: competitionSelect;
 }

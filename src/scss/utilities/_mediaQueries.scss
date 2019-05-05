@@ -1,8 +1,24 @@
-@media only screen and (max-width: 450px) {
-    .teamName{
-        word-wrap: break-word;
-        img{
-            display: block;
-        }
+/* Extra small devices (phones, 600px and down) */
+@mixin single-column-layout {
+    @media only screen and (max-width: 600px) {
+        @content
     }
 }
+
+@mixin multi-column-layout {
+    @media only screen and (min-width: 600px) {
+        @content
+    }
+}
+
+
+
+
+// @media only screen and (max-width: 450px) {
+//     .teamName{
+//         word-wrap: break-word;
+//         img{
+//             display: block;
+//         }
+//     }
+// }

@@ -5,7 +5,7 @@ class CompetitionSelect extends React.Component {
   render() {
     return (
       <select
-        className="form-control"
+        className="form-control userSelect"
         id="competitionSelect"
         onChange={e => this.props.handleCompetitionSelect(e.target.value)}
       >

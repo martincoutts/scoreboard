@@ -1,0 +1,25 @@
+.App {
+    display: grid;
+    height: 100vh;
+
+
+    @include single-column-layout {
+        grid-template-rows: 150px 30px 30px 1fr;
+        grid-template-columns: minmax(200px, 600px);
+        grid-template-areas: "header"
+            "countrySelect"
+            "competitionSelect"
+            "userFeedback";
+    }
+
+    @include multi-column-layout {
+        grid-template-rows: 150px repeat(2, 30px) 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas:
+            "header header"
+            "countrySelect competitionSelect"
+            "userFeedback userFeedback";
+    }
+
+
+}

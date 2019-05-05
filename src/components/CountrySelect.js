@@ -5,7 +5,7 @@ class CountrySelect extends React.Component {
   render() {
     return (
       <select
-        className="form-control"
+        className="form-control userSelect"
         id="countrySelect"
         onChange={e => this.props.handleCountrySelect(e.target.value)}
       >

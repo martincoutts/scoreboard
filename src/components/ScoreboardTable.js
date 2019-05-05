@@ -24,7 +24,7 @@ const ScoreboardTable = props => (
             <tr key={index + 1}>
               <td>{team.position}</td>
               <td>
-                <img src={team.team.crestUrl} />
+                <img src={team.team.crestUrl} alt="team logo" />
                 {team.team.name}
               </td>
               <td>{team.playedGames}</td>
