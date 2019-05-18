@@ -21,8 +21,10 @@ class ErrorDiv extends Component {
   render() {
     return (
       <div id="errorDiv">
-        <h1>Sorry :(</h1>
-        {this.renderUserMessage()}
+        <div id="errorMessage">
+          <h1>Sorry :(</h1>
+          {this.renderUserMessage()}
+        </div>
       </div>
     );
   }

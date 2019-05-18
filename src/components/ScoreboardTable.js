@@ -4,7 +4,7 @@ import { Table } from "react-bootstrap";
 const ScoreboardTable = props => (
   <div className="table-responsive">
     {props.standings.length === 0 || props.standings.errorCode ? (
-      <h3>Select A Competition</h3>
+      <h3 id="competitionUserPrompt">Select A Competition</h3>
     ) : (
       <Table id="scoreboardTable">
         <thead>
