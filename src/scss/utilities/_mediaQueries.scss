@@ -1,6 +1,6 @@
 /* Extra small devices (phones, 600px and down) */
 @mixin single-column-layout {
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 600px) {
         @content
     }
 }
