@@ -1,0 +1,36 @@
+#scoreboardTable {
+
+
+    thead {
+        background-color: rgb(231, 230, 230);
+    }
+
+    .teamNameCell {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+
+    @include single-column-layout {
+        .multiColumnCell {
+            display: none;
+        }
+
+        td {
+            text-align: center;
+
+        }
+
+
+        .teamNameCell {
+            width: 75px;
+            text-align: left;
+        }
+    }
+
+    @include tablet-layout {
+        .tabletLayoutCell {
+            display: none;
+        }
+    }
+}

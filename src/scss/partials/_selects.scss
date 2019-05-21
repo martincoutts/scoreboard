@@ -1,0 +1,18 @@
+.userSelect {
+    height: 30px;
+    margin: 15px 5px;
+}
+
+#countrySelect {
+    grid-area: countrySelect;
+}
+
+#competitionSelect {
+    grid-area: competitionSelect;
+}
+
+@include single-column-layout {
+    #competitionSelect {
+        margin-top: 20px;
+    }
+}

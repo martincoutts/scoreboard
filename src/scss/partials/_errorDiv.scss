@@ -1,0 +1,12 @@
+#errorDiv {
+    grid-area: userFeedback;
+    background-color: $secondary-color;
+    height: 100%;
+    margin-top: 35px;
+
+    #errorMessage {
+        padding: 50px;
+    }
+
+
+}

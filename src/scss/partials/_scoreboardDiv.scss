@@ -1,0 +1,16 @@
+#scoreboardDiv {
+    grid-area: userFeedback;
+
+    #competitionUserPrompt {
+        margin: 20px 0 20px 5px;
+        padding-top: 5px;
+        text-align: center;
+        font-size: 16pt;
+    }
+
+    @include single-column-layout {
+        #competitionUserPrompt {
+            padding-top: 10px;
+        }
+    }
+}

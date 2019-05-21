@@ -1,0 +1,12 @@
+nav {
+    background-color: $primary-color;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    grid-area: header;
+
+    h1 {
+        font-size: 30pt;
+
+    }
+}
