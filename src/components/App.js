@@ -25,7 +25,7 @@ class App extends Component {
   }
 
   fetchCountries() {
-    fetch("http://api.football-data.org/v2/areas", {
+    fetch("https://api.football-data.org/v2/areas", {
       headers: {
         "X-Auth-Token": "d565497f7275426097c945923bac37d9"
       }
@@ -50,7 +50,7 @@ class App extends Component {
   }
 
   fetchCompetitions() {
-    fetch("http://api.football-data.org/v2/competitions", {
+    fetch("https://api.football-data.org/v2/competitions", {
       headers: {
         "X-Auth-Token": "d565497f7275426097c945923bac37d9"
       }
@@ -75,7 +75,7 @@ class App extends Component {
   }
 
   fetchTable(compId) {
-    fetch(`http://api.football-data.org/v2/competitions/${compId}/standings`, {
+    fetch(`https://api.football-data.org/v2/competitions/${compId}/standings`, {
       headers: {
         "X-Auth-Token": "d565497f7275426097c945923bac37d9"
       }
