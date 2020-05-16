@@ -1,18 +1,8 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
-import { fetchCountries } from "../actions/fetch";
-
-const CountrySelect = ({ countries, fetchCountries }) => {
-  // const { fetchCountries, countries } = this.props;
-
-  useEffect(() => {
-    fetchCountries();
-  }, []);
-
+const CountrySelect = ({ countries }) => {
   return (
     <select
       className="form-control userSelect"
@@ -28,13 +18,6 @@ const CountrySelect = ({ countries, fetchCountries }) => {
   );
 };
 
-// CountrySelect.propTypes = {
-//   handleCountrySelect: PropTypes.func,
-// };
-
 const mapStateToProps = (state) => ({ countries: state.countries.countries });
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ fetchCountries }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(CountrySelect);
+export default connect(mapStateToProps)(CountrySelect);

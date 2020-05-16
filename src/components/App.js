@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { Provider, connect } from "react-redux";
-import { applyMiddleware, createStore, bindActionCreators } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from "redux-thunk";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { fetchCountries } from "../actions/fetch";
 
 import "../index.scss";
 import Header from "./Header";
@@ -11,64 +11,55 @@ import CompetitionSelect from "./CompetitionSelect";
 import ErrorDiv from "./ErrorDiv";
 import ScoreboardDiv from "./ScoreboardDiv";
 
-import rootReducer from "../rootReducer";
+// const fetchCountries = () => {
+//   fetch("https://api.football-data.org/v2/areas", {
+//     headers: {
+//       "X-Auth-Token": "d565497f7275426097c945923bac37d9",
+//     },
+//   })
+//     .then((res) => res.json())
+//     .then(
+//       (result) => {
+//         this.setState({
+//           countries: result.areas,
+//         });
+//       },
+//       // Note: it's important to handle errors here
+//       // instead of a catch block so that we don't swallow
+//       // exceptions from actual bugs in components.
+//       (error) => {
+//         this.setState({
+//           isLoaded: true,
+//           error,
+//         });
+//       }
+//     );
+// };
 
-const middleWare = [thunk];
-const store = createStore(
-  rootReducer,
-  {},
-  composeWithDevTools(applyMiddleware(...middleWare))
-);
-
-const fetchCountries = () => {
-  fetch("https://api.football-data.org/v2/areas", {
-    headers: {
-      "X-Auth-Token": "d565497f7275426097c945923bac37d9",
-    },
-  })
-    .then((res) => res.json())
-    .then(
-      (result) => {
-        this.setState({
-          countries: result.areas,
-        });
-      },
-      // Note: it's important to handle errors here
-      // instead of a catch block so that we don't swallow
-      // exceptions from actual bugs in components.
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error,
-        });
-      }
-    );
-};
-
-const fetchCompetitions = () => {
-  fetch("https://api.football-data.org/v2/competitions", {
-    headers: {
-      "X-Auth-Token": "d565497f7275426097c945923bac37d9",
-    },
-  })
-    .then((res) => res.json())
-    .then(
-      (result) => {
-        this.setState({
-          competitions: result.competitions,
-        });
-      },
-      // Note: it's important to handle errors here
-      // instead of a catch block so that we don't swallow
-      // exceptions from actual bugs in components.
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error,
-        });
-      }
-    );
-};
+// const fetchCompetitions = () => {
+//   fetch("https://api.football-data.org/v2/competitions", {
+//     headers: {
+//       "X-Auth-Token": "d565497f7275426097c945923bac37d9",
+//     },
+//   })
+//     .then((res) => res.json())
+//     .then(
+//       (result) => {
+//         this.setState({
+//           competitions: result.competitions,
+//         });
+//       },
+//       // Note: it's important to handle errors here
+//       // instead of a catch block so that we don't swallow
+//       // exceptions from actual bugs in components.
+//       (error) => {
+//         this.setState({
+//           isLoaded: true,
+//           error,
+//         });
+//       }
+//     );
+// };
 
 const fetchTable = (compId) => {
   fetch(`https://api.football-data.org/v2/competitions/${compId}/standings`, {
@@ -117,7 +108,7 @@ const filterCompetitions = () => {
   });
 };
 
-const App = () => {
+const App = ({ fetchCountries }) => {
   // constructor(props) {
   //   super(props);
   //   this.state = {
@@ -130,36 +121,33 @@ const App = () => {
   //   };
   // };
 
-  // useEffect(() => {
-  //   fetchCompetitions();
-  // }, []);
-
-  // componentDidMount() {
-  //   // this.fetchCountries();
-  //  fetchCompetitions();
-  // }
+  useEffect(() => {
+    fetchCountries();
+  }, []);
 
   return (
-    <Provider store={store}>
-      <div className="App">
-        <Header />
-        <CountrySelect
-          // countries={this.state.countries}
-          handleCountrySelect={handleCountrySelect}
-          filterCompetitions={filterCompetitions}
-        />
-        {/* <CompetitionSelect
-          // filteredCompetitions={this.state.filteredCompetitions}
-          handleCompetitionSelect={handleCompetitionSelect}
-        /> */}
-        {/* {this.state.standings.errorCode ? (
+    <div className="App">
+      <Header />
+      <CountrySelect
+        handleCountrySelect={handleCountrySelect}
+        filterCompetitions={filterCompetitions}
+      />
+      {/* <CompetitionSelect
+        // filteredCompetitions={this.state.filteredCompetitions}
+        handleCompetitionSelect={handleCompetitionSelect}
+      /> */}
+      {/* {this.state.standings.errorCode ? (
           <ErrorDiv standings={this.state.standings} />
         ) : (
           <ScoreboardDiv standings={this.state.standings} />
         )} */}
-      </div>
-    </Provider>
+    </div>
   );
 };
 
-export default App;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ fetchCountries }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
