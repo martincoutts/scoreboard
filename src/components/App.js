@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { fetchCountries } from "../actions/fetch";
+import { fetchCountries, fetchCompetitions } from "../actions/fetch";
 
 import "../index.scss";
 import Header from "./Header";
@@ -108,7 +108,7 @@ const filterCompetitions = () => {
   });
 };
 
-const App = ({ fetchCountries }) => {
+const App = ({ fetchCountries, fetchCompetitions }) => {
   // constructor(props) {
   //   super(props);
   //   this.state = {
@@ -122,6 +122,7 @@ const App = ({ fetchCountries }) => {
   // };
 
   useEffect(() => {
+    fetchCompetitions();
     fetchCountries();
   }, []);
 
@@ -148,6 +149,6 @@ const App = ({ fetchCountries }) => {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ fetchCountries }, dispatch);
+  bindActionCreators({ fetchCountries, fetchCompetitions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

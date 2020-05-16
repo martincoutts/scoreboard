@@ -25,10 +25,11 @@ export const fetchCompetitions = () => {
       },
     });
     const competitions = await res.json();
+    console.log("competitions", competitions);
 
     return dispatch({
-      type: "FETCH_COUNTRIES",
-      payload: competitions.areas,
+      type: "FETCH_COMPETITIONS",
+      payload: competitions.competitions,
     });
   };
 };
