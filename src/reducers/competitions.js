@@ -17,7 +17,6 @@ export default function (state = initialState, action) {
         isCompetitionsLoaded: true,
       };
     case FILTER_COMPETITIONS:
-      console.log("payload", payload);
       return {
         ...state,
         filteredCompetitions: payload,

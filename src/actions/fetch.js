@@ -1,5 +1,6 @@
 export const FETCH_COUNTRIES = "FETCH_COUNTRIES";
 export const FETCH_COMPETITIONS = "FETCH_COMPETITIONS";
+export const FETCH_TABLE = "FETCH_TABLE";
 
 export const fetchCountries = () => {
   return async function (dispatch) {
@@ -29,6 +30,26 @@ export const fetchCompetitions = () => {
     return dispatch({
       type: FETCH_COMPETITIONS,
       payload: competitions.competitions,
+    });
+  };
+};
+
+export const fetchTable = (compId) => {
+  return async function (dispatch) {
+    const res = await fetch(
+      `https://api.football-data.org/v2/competitions/${compId}/standings`,
+      {
+        headers: {
+          "X-Auth-Token": "d565497f7275426097c945923bac37d9",
+        },
+      }
+    );
+    const standings = await res.json();
+    console.log("standings", standings);
+
+    return dispatch({
+      type: FETCH_TABLE,
+      payload: standings,
     });
   };
 };

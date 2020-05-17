@@ -1,13 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
-const CompetitionSelect = ({ filteredCompetitions }) => {
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchTable } from "../actions";
+
+const CompetitionSelect = ({ filteredCompetitions, fetchTable }) => {
   return (
     <select
       className="form-control userSelect"
       id="competitionSelect"
-      // onChange={(e) => this.props.handleCompetitionSelect(e.target.value)}
+      onChange={(e) => fetchTable(parseInt(e.target.value))}
     >
       {filteredCompetitions.length === 0 ? (
         <option>Select A Competition</option>
@@ -26,4 +28,7 @@ const mapStateToProps = (state) => ({
   filteredCompetitions: state.competitions.filteredCompetitions,
 });
 
-export default connect(mapStateToProps)(CompetitionSelect);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ fetchTable }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompetitionSelect);

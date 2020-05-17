@@ -86,9 +86,9 @@ const fetchTable = (compId) => {
     );
 };
 
-const handleCountrySelect = (value) => {
-  this.setState({ selectedCountryId: value }, () => this.filterCompetitions());
-};
+// const handleCountrySelect = (value) => {
+//   this.setState({ selectedCountryId: value }, () => this.filterCompetitions());
+// };
 
 const handleCompetitionSelect = (value) => {
   this.setState({ selectedCompetitionId: "" });
@@ -96,17 +96,17 @@ const handleCompetitionSelect = (value) => {
   this.fetchTable(parseInt(value));
 };
 
-const filterCompetitions = () => {
-  let selectedCountryId = parseInt(this.state.selectedCountryId);
-  let filteredCompetitions = this.state.competitions.filter(function (
-    competition
-  ) {
-    return competition.area.id === selectedCountryId;
-  });
-  this.setState({
-    filteredCompetitions,
-  });
-};
+// const filterCompetitions = () => {
+//   let selectedCountryId = parseInt(this.state.selectedCountryId);
+//   let filteredCompetitions = this.state.competitions.filter(function (
+//     competition
+//   ) {
+//     return competition.area.id === selectedCountryId;
+//   });
+//   this.setState({
+//     filteredCompetitions,
+//   });
+// };
 
 const App = ({ fetchCountries, fetchCompetitions }) => {
   // constructor(props) {
@@ -129,10 +129,7 @@ const App = ({ fetchCountries, fetchCompetitions }) => {
   return (
     <div className="App">
       <Header />
-      <CountrySelect
-        handleCountrySelect={handleCountrySelect}
-        filterCompetitions={filterCompetitions}
-      />
+      <CountrySelect />
       <CompetitionSelect
       // filteredCompetitions={this.state.filteredCompetitions}
       // handleCompetitionSelect={handleCompetitionSelect}
