@@ -25,7 +25,6 @@ export const fetchCompetitions = () => {
       },
     });
     const competitions = await res.json();
-    console.log("competitions", competitions);
 
     return dispatch({
       type: FETCH_COMPETITIONS,

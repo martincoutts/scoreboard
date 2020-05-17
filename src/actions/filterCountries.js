@@ -5,7 +5,6 @@ export const FILTER_COUNTRIES = "FILTER_COUNTRIES";
 export const filterCountriesAction = (countries, competitions) => {
   return function (dispatch) {
     const filteredCountries = filterCountries(countries, competitions);
-    console.log("filteredCountries", filteredCountries);
 
     return dispatch({
       type: FILTER_COUNTRIES,

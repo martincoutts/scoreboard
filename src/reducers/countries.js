@@ -18,7 +18,6 @@ export default function (state = initialState, action) {
         isCountriesLoaded: true,
       };
     case FILTER_COUNTRIES:
-      console.log("payload", type, payload);
       return {
         ...state,
         filteredCountries: payload,
