@@ -1,26 +1,65 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect } from "react";
 
-class CountrySelect extends React.Component {
-  render() {
-    return (
-      <select
-        className="form-control userSelect"
-        id="countrySelect"
-        onChange={e => this.props.handleCountrySelect(e.target.value)}
-      >
-        {this.props.countries.map((country, index) => (
-          <option key={index + 1} value={country.id}>
-            {country.name}
-          </option>
-        ))}
-      </select>
-    );
-  }
-}
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-CountrySelect.propTypes = {
-  handleCountrySelect: PropTypes.func
+import { Select } from "antd";
+
+import {
+  filterCountriesAction,
+  filterCompetitionsAction,
+  resetFilterCompetitions,
+} from "../actions";
+
+const { Option } = Select;
+
+const CountrySelect = ({
+  countries,
+  competitions,
+  filterCountriesAction,
+  filterCompetitionsAction,
+  filteredCountries,
+  resetFilterCompetitions,
+}) => {
+  useEffect(() => {
+    filterCountriesAction(countries, competitions);
+  }, [countries, competitions]);
+
+  const handleCountrySelect = (value, competitions) => {
+    resetFilterCompetitions();
+    filterCompetitionsAction(parseInt(value), competitions);
+  };
+
+  return (
+    <Select
+      className="form-control userSelect"
+      id="countrySelect"
+      onChange={(value) => handleCountrySelect(parseInt(value), competitions)}
+      placeholder={"Select country"}
+    >
+      {filteredCountries.map((country, index) => (
+        <Option key={index + 1} value={country.id}>
+          {country.name}
+        </Option>
+      ))}
+    </Select>
+  );
 };
 
-export default CountrySelect;
+const mapStateToProps = (state) => ({
+  countries: state.countries.countries,
+  competitions: state.competitions.competitions,
+  filteredCountries: state.countries.filteredCountries,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      filterCountriesAction,
+      filterCompetitionsAction,
+      resetFilterCompetitions,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(CountrySelect);
