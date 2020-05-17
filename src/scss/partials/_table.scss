@@ -1,38 +1,45 @@
 #scoreboardTable {
-    width: 100%;
-    background-color: $secondary-color;
-    text-align: center;
-    margin: 20px 0 30px 0;
+  width: 100%;
+  background-color: $secondary-color;
+  text-align: center;
+  margin: 30px 0 30px 0;
 
-    .teamName {
-        text-align: left;
-    }
+  .teamName {
+    text-align: left;
+  }
 
-    th {
-        @extend %table-padding;
-        font-size: 13pt;
-        font-weight: 600;
+  .teamNameCell {
+    display: flex;
+    p {
+      align-self: center;
     }
+  }
 
-    td {
-        @extend %table-padding;
-        padding: 15px;
-    }
+  th {
+    @extend %table-padding;
+    font-size: 13pt;
+    font-weight: 600;
+  }
 
-    img {
-        height: 50px;
-        width: 50px;
-        margin-right: 15px;
-        border-radius: 50%;
-    }
+  td {
+    @extend %table-padding;
+    padding: 15px;
+  }
+
+  img {
+    height: 50px;
+    width: 50px;
+    margin-right: 15px;
+    border-radius: 50%;
+  }
 }
 
 .tableMobile {
-    margin-right: 50px;
+  margin-right: 50px;
 }
 
 @include single-column-layout {
-    #scoreboardTable {
-        margin-top: 35px;
-    }
+  #scoreboardTable {
+    margin-top: 35px;
+  }
 }
