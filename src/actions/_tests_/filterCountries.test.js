@@ -382,5 +382,5 @@ const expectedOutput = [
 ];
 
 test("filterCountries", () => {
-  expect(filterCountries(countries, competitions)).toBe(expectedOutput);
+  expect(filterCountries(countries, competitions)).toEqual(expectedOutput);
 });

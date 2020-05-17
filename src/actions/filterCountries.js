@@ -1,16 +1,18 @@
 export const filterCountries = (countries, competitions) => {
   const filteredCountries = [];
+
   countries.map((country) => {
     competitions.map((competition) => {
-      let valueExists = filteredCountries.find(
-        (el) => el[0] === competition.area.id
+      const valueExists = filteredCountries.some(
+        (el) => el.id === competition.area.id
       );
-      if (country.id === competition.area.id) {
-        console.log(valueExists);
+
+      if (country.id === competition.area.id && valueExists === false) {
         filteredCountries.push(country);
       }
     });
   });
+  console.log("filteredResults", filteredCountries);
 
   return filteredCountries;
 };
