@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-const CountrySelect = ({ countries }) => {
+import { filterCountriesAction } from "../actions/filterCountries";
+
+const CountrySelect = ({
+  countries,
+  competitions,
+  filterCountriesAction,
+  filteredCountries,
+}) => {
+  useEffect(() => {
+    filterCountriesAction(countries, competitions);
+  }, [countries, competitions]);
+
   return (
     <select
       className="form-control userSelect"
       id="countrySelect"
       // onChange={(e) => handleCountrySelect(e.target.value)}
     >
-      {countries.map((country, index) => (
+      {filteredCountries.map((country, index) => (
         <option key={index + 1} value={country.id}>
           {country.name}
         </option>
@@ -18,6 +30,13 @@ const CountrySelect = ({ countries }) => {
   );
 };
 
-const mapStateToProps = (state) => ({ countries: state.countries.countries });
+const mapStateToProps = (state) => ({
+  countries: state.countries.countries,
+  competitions: state.competitions.competitions,
+  filteredCountries: state.countries.filteredCountries,
+});
 
-export default connect(mapStateToProps)(CountrySelect);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ filterCountriesAction }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CountrySelect);

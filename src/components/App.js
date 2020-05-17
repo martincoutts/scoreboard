@@ -133,10 +133,10 @@ const App = ({ fetchCountries, fetchCompetitions }) => {
         handleCountrySelect={handleCountrySelect}
         filterCompetitions={filterCompetitions}
       />
-      {/* <CompetitionSelect
+      <CompetitionSelect
         // filteredCompetitions={this.state.filteredCompetitions}
         handleCompetitionSelect={handleCompetitionSelect}
-      /> */}
+      />
       {/* {this.state.standings.errorCode ? (
           <ErrorDiv standings={this.state.standings} />
         ) : (

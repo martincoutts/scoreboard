@@ -1,18 +1,15 @@
-export const filterCountries = (countries, competitions) => {
-  const filteredCountries = [];
+import { filterCountries } from "../functions/filterCountries";
 
-  countries.map((country) => {
-    competitions.map((competition) => {
-      const valueExists = filteredCountries.some(
-        (el) => el.id === competition.area.id
-      );
+export const FILTER_COUNTRIES = "FILTER_COUNTRIES";
 
-      if (country.id === competition.area.id && valueExists === false) {
-        filteredCountries.push(country);
-      }
+export const filterCountriesAction = (countries, competitions) => {
+  return function (dispatch) {
+    const filteredCountries = filterCountries(countries, competitions);
+    console.log("filteredCountries", filteredCountries);
+
+    return dispatch({
+      type: FILTER_COUNTRIES,
+      payload: filteredCountries,
     });
-  });
-  console.log("filteredResults", filteredCountries);
-
-  return filteredCountries;
+  };
 };

@@ -11,8 +11,8 @@ export const fetchCountries = () => {
     const countries = await res.json();
 
     return dispatch({
-      type: "FETCH_COUNTRIES",
-      result: countries.areas,
+      type: FETCH_COUNTRIES,
+      payload: countries.areas,
     });
   };
 };
@@ -28,7 +28,7 @@ export const fetchCompetitions = () => {
     console.log("competitions", competitions);
 
     return dispatch({
-      type: "FETCH_COMPETITIONS",
+      type: FETCH_COMPETITIONS,
       payload: competitions.competitions,
     });
   };
