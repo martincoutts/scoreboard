@@ -134,8 +134,8 @@ const App = ({ fetchCountries, fetchCompetitions }) => {
         filterCompetitions={filterCompetitions}
       />
       <CompetitionSelect
-        // filteredCompetitions={this.state.filteredCompetitions}
-        handleCompetitionSelect={handleCompetitionSelect}
+      // filteredCompetitions={this.state.filteredCompetitions}
+      // handleCompetitionSelect={handleCompetitionSelect}
       />
       {/* {this.state.standings.errorCode ? (
           <ErrorDiv standings={this.state.standings} />

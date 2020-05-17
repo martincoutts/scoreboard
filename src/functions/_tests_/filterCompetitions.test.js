@@ -334,7 +334,5 @@ const expectedOutput = [
 ];
 
 test("filterCompetitions", () => {
-  expect(filterCompetitions(selectedCountry.id, competitions)).toEqual(
-    expectedOutput
-  );
+  expect(filterCompetitions(2011, competitions)).toEqual(expectedOutput);
 });

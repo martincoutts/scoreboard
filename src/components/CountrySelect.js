@@ -3,12 +3,13 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { filterCountriesAction } from "../actions/filterCountries";
+import { filterCountriesAction, filterCompetitionsAction } from "../actions";
 
 const CountrySelect = ({
   countries,
   competitions,
   filterCountriesAction,
+  filterCompetitionsAction,
   filteredCountries,
 }) => {
   useEffect(() => {
@@ -19,7 +20,9 @@ const CountrySelect = ({
     <select
       className="form-control userSelect"
       id="countrySelect"
-      // onChange={(e) => handleCountrySelect(e.target.value)}
+      onChange={(e) =>
+        filterCompetitionsAction(parseInt(e.target.value), competitions)
+      }
     >
       {filteredCountries.map((country, index) => (
         <option key={index + 1} value={country.id}>
@@ -37,6 +40,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ filterCountriesAction }, dispatch);
+  bindActionCreators(
+    { filterCountriesAction, filterCompetitionsAction },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(CountrySelect);

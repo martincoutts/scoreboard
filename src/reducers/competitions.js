@@ -1,8 +1,10 @@
 import { FETCH_COMPETITIONS } from "../actions/fetch";
+import { FILTER_COMPETITIONS } from "../actions/filterCompetitions";
 
 const initialState = {
   competitions: [],
   isCompetitionsLoaded: false,
+  filteredCompetitions: [],
 };
 
 export default function (state = initialState, action) {
@@ -14,6 +16,13 @@ export default function (state = initialState, action) {
         competitions: payload,
         isCompetitionsLoaded: true,
       };
+    case FILTER_COMPETITIONS:
+      console.log("payload", payload);
+      return {
+        ...state,
+        filteredCompetitions: payload,
+      };
+
     default:
       return state;
   }
