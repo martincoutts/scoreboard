@@ -1,5 +1,6 @@
-import { FETCH_COMPETITIONS } from "../actions/fetch";
-import { FILTER_COMPETITIONS } from "../actions/filterCompetitions";
+import { FETCH_COMPETITIONS } from "../actions";
+import { FILTER_COMPETITIONS } from "../actions";
+import { RESET_FILTER_COMPETITIONS } from "../actions";
 
 const initialState = {
   competitions: [],
@@ -20,6 +21,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         filteredCompetitions: payload,
+      };
+    case RESET_FILTER_COMPETITIONS:
+      return {
+        ...state,
+        filteredCompetitions: [],
       };
 
     default:

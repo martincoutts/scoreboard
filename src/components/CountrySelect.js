@@ -3,7 +3,15 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { filterCountriesAction, filterCompetitionsAction } from "../actions";
+import { Select } from "antd";
+
+import {
+  filterCountriesAction,
+  filterCompetitionsAction,
+  resetFilterCompetitions,
+} from "../actions";
+
+const { Option } = Select;
 
 const CountrySelect = ({
   countries,
@@ -11,25 +19,30 @@ const CountrySelect = ({
   filterCountriesAction,
   filterCompetitionsAction,
   filteredCountries,
+  resetFilterCompetitions,
 }) => {
   useEffect(() => {
     filterCountriesAction(countries, competitions);
   }, [countries, competitions]);
 
+  const handleCountrySelect = (value, competitions) => {
+    resetFilterCompetitions();
+    filterCompetitionsAction(parseInt(value), competitions);
+  };
+
   return (
-    <select
+    <Select
       className="form-control userSelect"
       id="countrySelect"
-      onChange={(e) =>
-        filterCompetitionsAction(parseInt(e.target.value), competitions)
-      }
+      onChange={(value) => handleCountrySelect(parseInt(value), competitions)}
+      placeholder={"Select country"}
     >
       {filteredCountries.map((country, index) => (
-        <option key={index + 1} value={country.id}>
+        <Option key={index + 1} value={country.id}>
           {country.name}
-        </option>
+        </Option>
       ))}
-    </select>
+    </Select>
   );
 };
 
@@ -41,7 +54,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
-    { filterCountriesAction, filterCompetitionsAction },
+    {
+      filterCountriesAction,
+      filterCompetitionsAction,
+      resetFilterCompetitions,
+    },
     dispatch
   );
 

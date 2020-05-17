@@ -1,9 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import { Table } from "react-bootstrap";
 
-const ScoreboardTable = props => (
+const ScoreboardTable = ({ standings }) => (
   <div className="table-responsive">
-    {props.standings.length === 0 || props.standings.errorCode ? (
+    {standings.length === 0 || standings.errorCode ? (
       <h3 id="competitionUserPrompt">Select A Competition</h3>
     ) : (
       <Table id="scoreboardTable">
@@ -20,7 +22,7 @@ const ScoreboardTable = props => (
           </tr>
         </thead>
         <tbody>
-          {props.standings.standings[0].table.map((team, index) => (
+          {standings.standings[0].table.map((team, index) => (
             <tr className="tableRow" key={index + 1}>
               <td className="teamPositionCell">{team.position}</td>
               <td className="teamNameCell">
@@ -45,4 +47,8 @@ const ScoreboardTable = props => (
   </div>
 );
 
-export default ScoreboardTable;
+const mapStateToProps = (state) => ({
+  standings: state.standings.standings,
+});
+
+export default connect(mapStateToProps)(ScoreboardTable);

@@ -45,7 +45,6 @@ export const fetchTable = (compId) => {
       }
     );
     const standings = await res.json();
-    console.log("standings", standings);
 
     return dispatch({
       type: FETCH_TABLE,
